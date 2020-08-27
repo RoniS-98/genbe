@@ -1,2 +1,0 @@
-# genbe
-prodemy-backend
