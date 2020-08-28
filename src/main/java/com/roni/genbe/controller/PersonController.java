@@ -10,6 +10,8 @@ import com.roni.genbe.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Year;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,8 +69,9 @@ public class PersonController {
 
     @PostMapping
     public Response insert (@RequestBody PersonDto personDto){
-
-        if (personDto.getNik().length()==16){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(personDto.getTgl());
+        if (personDto.getNik().length()==16 && Year.now().getValue()-calendar.get(Calendar.YEAR)>=30){
             Person person = convertToEntityPerson(personDto);
             personRepository.save(person);
 
@@ -76,7 +79,7 @@ public class PersonController {
             biodataRepository.save(biodata);
             return response("true","Data berhasil masuk");
         }
-        return response("false","Data gagal masuk, digit NIK tidak sama dengan 16");
+        return response("false","Data gagal masuk, digit NIK tidak sama dengan 16 atau umur kurang dari 30 tahun");
 
     }
     private Biodata convertToEntityBio(PersonDto dto, Integer idPerson){

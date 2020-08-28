@@ -27,6 +27,7 @@ public class Pendidikan {
     @JoinColumn(name = "id_person",nullable = false)
     private Person person;
 
+
     public Integer getIdPendidikan() {
         return idPendidikan;
     }

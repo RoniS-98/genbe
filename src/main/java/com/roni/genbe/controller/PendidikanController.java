@@ -41,15 +41,13 @@ public class PendidikanController {
 //        pendidikanRepository.save(pendidikan);
 //        return convertToDto(pendidikan);
 //    }
-    @PostMapping("/{idPerson}")
-    public PendidikanDto insert (@RequestBody PendidikanDto dto,@PathVariable Integer id){
-        Pendidikan pendidikan = convertToEntity(dto);
-        pendidikan.setPerson(personRepository.getOne(id));
-        pendidikanRepository.save(pendidikan);
-
-        return convertToDto(pendidikan);
-
-    }
+//    @PostMapping()
+//    public List<PendidikanDto> insert (@RequestBody List<PendidikanDto> dto){
+//        List<Pendidikan> pendidikan = dto.stream().map(x->convertToEntity(x,id).co);
+//        pendidikan.stream.foreach(y->pendidikanRepository.save(y));
+//
+//
+//    }
 
     private Pendidikan convertToEntity(PendidikanDto dto){
         Pendidikan pendidikan = new Pendidikan();
