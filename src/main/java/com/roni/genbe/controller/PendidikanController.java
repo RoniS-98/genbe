@@ -3,6 +3,7 @@ package com.roni.genbe.controller;
 
 import com.roni.genbe.model.dto.PendidikanDto;
 import com.roni.genbe.model.dto.PersonDto;
+import com.roni.genbe.model.dto.Response;
 import com.roni.genbe.model.entity.Biodata;
 import com.roni.genbe.model.entity.Pendidikan;
 import com.roni.genbe.model.entity.Person;
@@ -35,21 +36,34 @@ public class PendidikanController {
         return pendidikanDtoList;
     }
 
-//    @PostMapping
-//    public PendidikanDto insert (@RequestBody PendidikanDto pendidikanDto){
-//        Pendidikan pendidikan = convertToEntity(pendidikanDto);
-//        pendidikanRepository.save(pendidikan);
-//        return convertToDto(pendidikan);
-//    }
-//    @PostMapping()
-//    public List<PendidikanDto> insert (@RequestBody List<PendidikanDto> dto){
-//        List<Pendidikan> pendidikan = dto.stream().map(x->convertToEntity(x,id).co);
-//        pendidikan.stream.foreach(y->pendidikanRepository.save(y));
-//
-//
-//    }
+    @PostMapping("/person/{idPerson}")
+    public Response insert(@PathVariable Integer idPerson, @RequestBody List<PendidikanDto> pendidikanDtoList){
+        if (personRepository.findById(idPerson).isPresent()){
+            List<Pendidikan> pendidikanList = pendidikanDtoList.stream().map(x-> convertToEntity(x,idPerson))
+                    .collect(Collectors.toList());
+            pendidikanList.stream().forEach(y -> pendidikanRepository.save(y));
+            if (pendidikanRepository.findAllByPersonIdPerson(idPerson).containsAll(pendidikanList)){
+                return response("true","Data berhasil masuk ");
+            }else {
+                return response("false","Data gagal masuk");
+            }
+        }
+        return null;
+    }
 
-    private Pendidikan convertToEntity(PendidikanDto dto){
+    private Response response (String status, String message){
+        Response response = new Response();
+        if (status=="true"){
+            response.setStatus("True");
+            response.setMessage(message);
+        }else {
+            response.setStatus("False");
+            response.setMessage(message);
+        }
+        return response;
+    }
+
+    private Pendidikan convertToEntity(PendidikanDto dto, Integer idPerson){
         Pendidikan pendidikan = new Pendidikan();
         pendidikan.setIdPendidikan(dto.getIdEducation());
         pendidikan.setJenjang(dto.getLevelEducation());
@@ -57,8 +71,8 @@ public class PendidikanController {
         pendidikan.setTahunMasuk(dto.getInYear());
         pendidikan.setTahunLulus(dto.getEndYear());
 
-        if (personRepository.findById(dto.getIdPerson()).isPresent()){
-            Person person = personRepository.findById(dto.getIdPerson()).get();
+        if (personRepository.findById(idPerson).isPresent()){
+            Person person = personRepository.findById(idPerson).get();
             pendidikan.setPerson(person);
         }
 
