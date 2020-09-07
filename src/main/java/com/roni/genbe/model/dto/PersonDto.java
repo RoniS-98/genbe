@@ -7,10 +7,12 @@ public class PersonDto {
     private Integer idPerson;
     private String nik;
     private String name;
-    private String adress;
+    private String alamat;
     private Date tgl;
     private String tempatLahir;
     private String hp;
+    private String jenjang;
+    private Integer umur;
 
 
     public Integer getIdPerson() {
@@ -37,12 +39,12 @@ public class PersonDto {
         this.name = name;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAlamat() {
+        return alamat;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
     }
 
     public Date getTgl() {
@@ -67,5 +69,21 @@ public class PersonDto {
 
     public void setHp(String hp) {
         this.hp = hp;
+    }
+
+    public String getJenjang() {
+        return jenjang;
+    }
+
+    public void setJenjang(String jenjang) {
+        this.jenjang = jenjang;
+    }
+
+    public Integer getUmur() {
+        return umur;
+    }
+
+    public void setUmur(Integer umur) {
+        this.umur = umur;
     }
 }

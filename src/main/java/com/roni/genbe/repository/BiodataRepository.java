@@ -17,4 +17,7 @@ public interface BiodataRepository extends JpaRepository<Biodata, Integer> {
 
     @Query(value = "SELECT b.tempat_lahir FROM t_biodata b JOIN t_person p ON b.id_person = p.id_person WHERE p.nik = ?", nativeQuery = true)
     String findTempatLahirByPersonNik(String nik);
+
+    Biodata findByPersonIdPerson(Integer idPerson);
+
 }

@@ -2,10 +2,10 @@ package com.roni.genbe.model.dto;
 
 public class PendidikanDto {
     private Integer idEducation;
-    private String levelEducation;
-    private String institution;
-    private String inYear;
-    private String endYear;
+    private String jenjang;
+    private String institusi;
+    private String tahunMasuk;
+    private String tahunLulus;
     private Integer idPerson;
 
     public Integer getIdEducation() {
@@ -16,36 +16,36 @@ public class PendidikanDto {
         this.idEducation = idEducation;
     }
 
-    public String getLevelEducation() {
-        return levelEducation;
+    public String getJenjang() {
+        return jenjang;
     }
 
-    public void setLevelEducation(String levelEducation) {
-        this.levelEducation = levelEducation;
+    public void setJenjang(String jenjang) {
+        this.jenjang = jenjang;
     }
 
-    public String getInstitution() {
-        return institution;
+    public String getInstitusi() {
+        return institusi;
     }
 
-    public void setInstitution(String institution) {
-        this.institution = institution;
+    public void setInstitusi(String institusi) {
+        this.institusi = institusi;
     }
 
-    public String getInYear() {
-        return inYear;
+    public String getTahunMasuk() {
+        return tahunMasuk;
     }
 
-    public void setInYear(String inYear) {
-        this.inYear = inYear;
+    public void setTahunMasuk(String tahunMasuk) {
+        this.tahunMasuk = tahunMasuk;
     }
 
-    public String getEndYear() {
-        return endYear;
+    public String getTahunLulus() {
+        return tahunLulus;
     }
 
-    public void setEndYear(String endYear) {
-        this.endYear = endYear;
+    public void setTahunLulus(String tahunLulus) {
+        this.tahunLulus = tahunLulus;
     }
 
     public Integer getIdPerson() {

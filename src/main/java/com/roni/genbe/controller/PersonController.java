@@ -6,25 +6,27 @@ import com.roni.genbe.model.entity.Person;
 import com.roni.genbe.repository.BiodataRepository;
 import com.roni.genbe.repository.PendidikanRepository;
 import com.roni.genbe.repository.PersonRepository;
+import com.roni.genbe.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/person")
+@CrossOrigin
 public class PersonController {
     @Autowired
     private final PersonRepository personRepository;
     private final BiodataRepository biodataRepository;
     private final PendidikanRepository pendidikanRepository;
+
+    @Autowired
+    private PersonService personService;
 
     @Autowired
     public PersonController(PersonRepository personRepository, BiodataRepository biodataRepository, PendidikanRepository pendidikanRepository){
@@ -36,10 +38,30 @@ public class PersonController {
     @GetMapping
     public List<PersonDto> person(){
         List<Person> personList = personRepository.findAll();
-        List<PersonDto> personDtoList = personList.stream().map(this::convertToDto)
-                .collect(Collectors.toList());
+        List<PersonDto> coba= new ArrayList<>();
+        for (Person b:personList) {
+            PersonDto personDto = new PersonDto();
+            Biodata biodata = biodataRepository.findByPersonIdPerson(b.getIdPerson());
+            personDto.setHp(biodata.getNoHp());
+            personDto.setTgl(biodata.getTgl());
+            personDto.setTempatLahir(biodata.getTempatLahir());
+            personDto.setName(b.getNama());
+            personDto.setAlamat(b.getAlamat());
+            personDto.setIdPerson(b.getIdPerson());
+            personDto.setNik(b.getNik());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(personDto.getTgl());
+            Integer umur = Year.now().getValue()-calendar.get(Calendar.YEAR);
+            personDto.setUmur(umur);
+            personDto.setJenjang(pendidikanRepository.findJenjangByNik(b.getNik()));
+            coba.add(personDto);
+        }
+        return coba;
+    }
 
-        return personDtoList;
+    @GetMapping("/biodata/{idPerson}")
+    public Biodata biodata(@PathVariable Integer idPerson){
+        return biodataRepository.findByPersonIdPerson(idPerson);
     }
     //Soal No 2
     @GetMapping("/pendidikan/{nik}")
@@ -81,17 +103,16 @@ public class PersonController {
         }
         return status;
     }
-
-    @PostMapping
-    public Response insert (@RequestBody PersonDto personDto){
+    @PostMapping("/trx")
+    public  Response insertTrx (@RequestBody PersonDto personDto){
         Response response = new Response();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(personDto.getTgl());
         if (personDto.getNik().length()==16 && Year.now().getValue()-calendar.get(Calendar.YEAR)>=30){
             Person person = convertToEntityPerson(personDto);
-            personRepository.save(person);
+            person = personService.insertPerson(person);
             Biodata biodata = convertToEntityBio(personDto, person.getIdPerson());
-            biodataRepository.save(biodata);
+            personService.insertBiodata(biodata);
             response.setStatus("true");
             response.setMessage("Data berhasil masuk");
         } else {
@@ -100,6 +121,26 @@ public class PersonController {
         }
         return response;
     }
+
+
+//    @PostMapping
+//    public Response insert (@RequestBody PersonDto personDto){
+//        Response response = new Response();
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(personDto.getTgl());
+//        if (personDto.getNik().length()==16 && Year.now().getValue()-calendar.get(Calendar.YEAR)>=30){
+//            Person person = convertToEntityPerson(personDto);
+//            personRepository.save(person);
+//            Biodata biodata = convertToEntityBio(personDto, person.getIdPerson());
+//            biodataRepository.save(biodata);
+//            response.setStatus("true");
+//            response.setMessage("Data berhasil masuk");
+//        } else {
+//            response.setStatus("false");
+//            response.setMessage("Data gagal masuk, digit NIK tidak sama dengan 16 atau umur kurang dari 30 tahun");
+//        }
+//        return response;
+//    }
     private Biodata convertToEntityBio(PersonDto dto, Integer idPerson){
         Biodata biodata = new Biodata();
         biodata.setNoHp(dto.getHp());
@@ -119,7 +160,7 @@ public class PersonController {
         person.setIdPerson(dto.getIdPerson());
         person.setNik(dto.getNik());
         person.setNama(dto.getName());
-        person.setAlamat(dto.getAdress());
+        person.setAlamat(dto.getAlamat());
 
         return person;
     }
@@ -130,7 +171,7 @@ public class PersonController {
         personDto.setIdPerson(person.getIdPerson());
         personDto.setNik(person.getNik());
         personDto.setName(person.getNama());
-        personDto.setAdress(person.getAlamat());
+        personDto.setAlamat(person.getAlamat());
 
         return personDto;
     }
