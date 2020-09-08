@@ -42,7 +42,7 @@
                 </div>
                 <div class="modal-body">
                     <form role="form" id="form-biodata">
-                        <input name="id" type="hidden"/>
+<!--                        <input name="id" type="hidden"/>-->
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="nik" class="col-sm col-form-label">NIK</label>
@@ -85,7 +85,7 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
-                    <button class="btn btn-primary" id="btn-save-biodata" type="button">Save</button>
+                    <button class="btn btn-primary" id="btn-save-biodata" type="button" >Save</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -98,30 +98,13 @@
 
 <th:block layout:fragment="add-scripts">
     <script th:src="@{/assets/js/biodata.js}"></script>
-    <script>
-        tableBiodata.create();
-
-        $('#btn-cari-pasien').click(function () {
-            var tanggalLahir = new Date($('#tanggalLahir').val()) * 1;
-            tableKelolaPasien.create();
-        });
-
-        $('#btn-tambah-biodata').click(function () {
-            formBiodata.resetForm();
-            $('#modal-biodata').modal('show')
-        });
-
-        $('#btn-save-biodata').click(function () {
-            formBiodata.saveForm();
-        })
-
-    </script>
-
-
-</th:block>
-<th:block layout:fragment="script">
     <script th:src="@{/assets/js/person.js}"></script>
     <script th:src="@{/assets/js/default.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+</th:block>
+
+
+<th:block layout:fragment="script">
 
 </th:block>
 </body>

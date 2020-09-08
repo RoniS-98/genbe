@@ -3,78 +3,8 @@ $(document).ready(function () {
   addForm()
   postPerson()
   increment()
-  // postList()
   postPendidikan()
-  formModals()
-  $('#btn-tambah-biodata').click(function () {
-    formBiodata.resetForm();
-    $('#modal-biodata').modal('show')
-  });
-
-  $('#btn-save-biodata').click(function () {
-    formBiodata.saveForm()
-  });
-
-  var formBiodata = {
-    resetForm: function () {
-      $('#form-biodata')[0].reset();
-    },
-    saveForm: function () {
-      if ($('#form-biodata').parsley().validate()) {
-        var dataResult = getJsonForm($("#form-biodata").serializeArray(), true);
-
-        $.ajax({
-          url: '/person/trx',
-          method: 'post',
-          contentType: 'application/json',
-          dataType: 'json',
-          data: JSON.stringify(dataResult),
-          success: function (res, status, xhr) {
-            if (xhr.status == 200 || xhr.status == 201) {
-              tableBiodata.create();
-              $('#modal-biodata').modal('hide')
-
-            } else {
-
-            }
-          },
-          error: function (err) {
-            console.log(err);
-          }
-        });
-      }
-    }, setEditData: function (idCabang) {
-      formBiodata.resetForm();
-
-      $.ajax({
-        url: '/person/biodata/' + idCabang,
-        method: 'get',
-        contentType: 'application/json',
-        dataType: 'json',
-        success: function (res, status, xhr) {
-          if (xhr.status == 200 || xhr.status == 201) {
-            $('#form-biodata').fromJSON(JSON.stringify(res));
-            $('#modal-biodata').modal('show')
-
-          } else {
-
-          }
-        },
-        erorrr: function (err) {
-          console.log(err);
-        }
-      },
-      console.log(res)
-      );
-
-
-    }
-
-  };
-
 });
-
-
 
 function getPerson() {
   let  persons = $('#tablePerson')
@@ -141,7 +71,7 @@ function postPerson(){
     person.hp= $("#hp").val();
     person.tgl= $(".date").val();
     person.tempatLahir= $("#tempatLahir").val();
-    console.log(person);
+    // console.log(person);
     var personObj = JSON.stringify(person);
 
     $.ajax({
@@ -150,15 +80,35 @@ function postPerson(){
       dataType: "json",
       contentType: "application/json; charset=utf-8",
       data: personObj,
-      success: function () {
-        Swal.fire(
-          'Data Anda Terkirim',
-          '',
-          'success'
-        )
+      success: function (status) {
+        console.log(status)
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000
+        });
+        if (status.status=="true"){
+            Toast.fire({
+              icon:'success',
+              type: 'success',
+              title: 'status : ' + status.status + '\nmessage: ' + 'Data Anda Berhasil Dikrim'
+            })
+
+        }
       },
-      error: function (){
-        alert("Data Kurang Lengkap");
+      error: function (status){
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000
+        });
+        Toast.fire({
+          icon:'error',
+          type: 'error',
+          title: 'status : ' + status.status + '\nmessage: ' + 'NIK Kurang Dari 16 Digit atau Umur Anda Kurang Dari 30 Tahun'
+        })
       }
     });
     console.log(personObj);
@@ -264,86 +214,6 @@ function addForm(){
 
 }
 
-function formModals(){
-
-  var tableBiodata = {
-    create: function () {
-      // jika table tersebut datatable, maka clear and dostroy
-      if ($.fn.DataTable.isDataTable('#tableBiodata')) {
-        //table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
-        $('#tableBiodata').DataTable().clear();
-        $('#tableBiodata').DataTable().destroy();
-      }
-
-      let  persons = $('#tablePerson')
-      $.ajax({
-        url: '/person',
-        method: 'GET',
-        success: function (res, status, xhr) {
-          if (xhr.status == 200 || xhr.status == 201) {
-            $(persons).DataTable({
-              data: res,
-              columns: [
-                {
-                  title: "NIK",
-                  data: "nik"
-                },
-                {
-                  title: "Nama",
-                  data: "name"
-                },
-                {
-                  title: "Alamat",
-                  data: "alamat"
-                },
-                {
-                  title: "HP",
-                  data: "hp"
-                },
-                {
-                  title: "Tanggal Lahir",
-                  data: "tgl"
-                },
-                {
-                  title: "Tempat Lahir",
-                  data: "tempatLahir"
-                },
-                {
-                  title: "Umur",
-                  data: "umur"
-                },
-                {
-                  title: "Jenjang",
-                  data: "jenjang"
-                }
-              ],
-              "scrollX": true
-            });
-            console.log(nik);
-
-          } else {
-
-          }
-        },
-        error: function (err) {
-          console.log(err);
-        }
-
-      });
-
-    }
-  };
-
-
-
-  $('#btn-cari-pasien').click(function () {
-    var tanggalLahir = new Date($('#tanggalLahir').val()) * 1;
-    tableKelolaPasien.create();
-  });
-
-
-
-}
 
 var id = 0;
 function increment(){

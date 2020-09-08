@@ -1,3 +1,16 @@
+$(document).ready(function () {
+
+  tableBiodata.create();
+});
+$('#btn-tambah-biodata').click(function () {
+  formBiodata.resetForm();
+  $('#modal-biodata').modal('show')
+});
+
+$('#btn-save-biodata').click(function () {
+  formBiodata.saveForm()
+})
+
 var tableBiodata = {
   create: function () {
     // jika table tersebut datatable, maka clear and dostroy
@@ -70,35 +83,51 @@ var formBiodata = {
   saveForm: function () {
     // if ($('#form-biodata').parsley().validate()) {
       var dataResult = getJsonForm($("#form-biodata").serializeArray(), true);
-
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
       $.ajax({
         url: '/person/trx',
         method: 'post',
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify(dataResult),
+
         success: function (res, status, xhr) {
           if (xhr.status == 200 || xhr.status == 201) {
             tableBiodata.create();
+            if (status.status=="true"){
+              Toast.fire({
+                icon:'success',
+                type: 'success',
+                title: 'status : ' + status.status + '\nmessage: ' + 'Data Anda Berhasil Dikrim'
+              })
+            }
             $('#modal-biodata').modal('hide')
-
-          } else {
-
           }
         },
-        erorrr: function (err) {
-          console.log(err);
+        error: function (status) {
+          if (status.status=="true"){
+            Toast.fire({
+              icon:'success',
+              type: 'success',
+              title: 'status : ' + status.status + '\nmessage: ' + 'Data Anda Berhasil Dikrim'
+            })
+
+          }
         }
       },
       console.log(dataResult)
       );
     // }
-
-  }, setEditData: function (idCabang) {
+  }, setEditData: function (idPerson) {
     formBiodata.resetForm();
 
     $.ajax({
-      url: '/person/biodata/' + idCabang,
+      url: '/person/biodata/' + idPerson,
       method: 'get',
       contentType: 'application/json',
       dataType: 'json',
@@ -107,15 +136,11 @@ var formBiodata = {
           console.log(res)
           $('#form-biodata').fromJSON(JSON.stringify(res));
           $('#form-biodata').fromJSON(JSON.stringify(res.person));
-          // $('#form-biodata').fromJSON(JSON.stringify(res.biodata));
-
           $('#modal-biodata').modal('show')
-
-        } else {
 
         }
       },
-      erorrr: function (err) {
+      error: function (err) {
         console.log(err);
       }
     });
