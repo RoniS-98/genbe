@@ -14,7 +14,7 @@ public class Biodata {
     private Integer idBiodata;
 
     @Column(name = "nohp", length = 16)
-    private String noHp;
+    private String hp;
 
     @Column(name = "tanggal_lahir", nullable = false)
     private Date tgl;
@@ -34,13 +34,13 @@ public class Biodata {
         this.idBiodata = idBiodata;
     }
 
-    public String getNoHp() {
-        return noHp;
-    }
+//    public String getNoHp() {
+//        return noHp;
+//    }
 
-    public void setNoHp(String noHp) {
-        this.noHp = noHp;
-    }
+//    public void setNoHp(String noHp) {
+//        this.noHp = noHp;
+//    }
 
     public Date getTgl() {
         return tgl;
@@ -64,5 +64,13 @@ public class Biodata {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public String getHp() {
+        return hp;
+    }
+
+    public void setHp(String hp) {
+        this.hp = hp;
     }
 }

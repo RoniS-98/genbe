@@ -15,7 +15,7 @@ public class Person {
     private String nik;
 
     @Column(name = "nama",length = 50)
-    private String nama;
+    private String name;
 
     @Column(name = "alamat",length = 255)
     private String alamat;
@@ -38,12 +38,21 @@ public class Person {
         this.nik = nik;
     }
 
-    public String getNama() {
-        return nama;
+//    public String getNama() {
+//        return name;
+//    }
+
+//    public void setNama(String name) {
+//        this.name = name;
+//    }
+
+
+    public String getName() {
+        return name;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAlamat() {

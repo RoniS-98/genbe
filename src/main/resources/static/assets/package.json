@@ -25,7 +25,7 @@
     "css-minify:extra-components": "npm run css-minify-bash -- dist/css/alt/adminlte.extra-components.min.css dist/css/alt/adminlte.extra-components.css",
     "css-minify:pages": "npm run css-minify-bash -- dist/css/alt/adminlte.pages.min.css dist/css/alt/adminlte.pages.css",
     "css-minify:plugins": "npm run css-minify-bash -- dist/css/alt/adminlte.plugins.min.css dist/css/alt/adminlte.plugins.css",
-    "compile": "npm-run-all --parallel ../js css-all",
+    "compile": "npm-run-all --parallel js css-all",
     "dev": "npm-run-all --parallel watch sync",
     "docs": "npm-run-all --sequential docs-clean docs-prepare docs-compile",
     "docs-clean": "cd docs/ && bundle exec jekyll clean -d ../docs_html",
@@ -42,7 +42,7 @@
     "sync": "browser-sync start --server --files *.html pages/ dist/",
     "watch": "npm-run-all --parallel watch-css watch-js",
     "watch-css": "nodemon --watch build/scss -e scss -x \"npm run css\"",
-    "watch-js": "nodemon --watch build/js -e ../js -x \\\"npm run js\\\""
+    "watch-js": "nodemon --watch build/js -e js -x \\\\\\\"npm run js\\\\\\\""
   },
   "keywords": [
     "css",

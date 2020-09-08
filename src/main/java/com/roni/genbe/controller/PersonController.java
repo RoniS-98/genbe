@@ -42,10 +42,10 @@ public class PersonController {
         for (Person b:personList) {
             PersonDto personDto = new PersonDto();
             Biodata biodata = biodataRepository.findByPersonIdPerson(b.getIdPerson());
-            personDto.setHp(biodata.getNoHp());
+            personDto.setHp(biodata.getHp());
             personDto.setTgl(biodata.getTgl());
             personDto.setTempatLahir(biodata.getTempatLahir());
-            personDto.setName(b.getNama());
+            personDto.setName(b.getName());
             personDto.setAlamat(b.getAlamat());
             personDto.setIdPerson(b.getIdPerson());
             personDto.setNik(b.getNik());
@@ -143,7 +143,7 @@ public class PersonController {
 //    }
     private Biodata convertToEntityBio(PersonDto dto, Integer idPerson){
         Biodata biodata = new Biodata();
-        biodata.setNoHp(dto.getHp());
+        biodata.setHp(dto.getHp());
         biodata.setTgl(dto.getTgl());
         biodata.setTempatLahir(dto.getTempatLahir());
 
@@ -159,7 +159,7 @@ public class PersonController {
         Person person = new Person();
         person.setIdPerson(dto.getIdPerson());
         person.setNik(dto.getNik());
-        person.setNama(dto.getName());
+        person.setName(dto.getName());
         person.setAlamat(dto.getAlamat());
 
         return person;
@@ -170,7 +170,7 @@ public class PersonController {
         PersonDto personDto = new PersonDto();
         personDto.setIdPerson(person.getIdPerson());
         personDto.setNik(person.getNik());
-        personDto.setName(person.getNama());
+        personDto.setName(person.getName());
         personDto.setAlamat(person.getAlamat());
 
         return personDto;

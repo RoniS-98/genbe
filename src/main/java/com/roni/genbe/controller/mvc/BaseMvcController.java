@@ -22,4 +22,9 @@ public class BaseMvcController {
     public String tabelperson() {
         return "dashboard/tabelPerson";
     }
+
+    @GetMapping("/formModals")
+    public String formModals() {
+        return "dashboard/formModals";
+    }
 }
