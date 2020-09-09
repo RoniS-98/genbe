@@ -26,13 +26,19 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person insertPerson(Person person){
-        personRepository.save(person);
+        // personRepository.save(person);
             return personRepository.save(person);
     }
 
     @Override
     public Biodata insertBiodata(Biodata biodata) {
-        biodataRepository.save(biodata);
+        // biodataRepository.save(biodata);
+        return biodataRepository.save(biodata);
+    }
+
+    @Override
+    public Biodata idbio(Biodata biodata) {
+        // biodataRepository.save(biodata);
         return biodataRepository.save(biodata);
     }
 
@@ -64,4 +70,6 @@ public class PersonServiceImpl implements PersonService {
 
         return pendidikan;
     }
+
+    
 }

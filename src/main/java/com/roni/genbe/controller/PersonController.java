@@ -10,6 +10,8 @@ import com.roni.genbe.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import springfox.documentation.swagger2.mappers.ModelMapper;
+
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,6 +44,7 @@ public class PersonController {
         for (Person b:personList) {
             PersonDto personDto = new PersonDto();
             Biodata biodata = biodataRepository.findByPersonIdPerson(b.getIdPerson());
+            personDto.setIdBiodata(biodata.getIdBiodata());
             personDto.setHp(biodata.getHp());
             personDto.setTgl(biodata.getTgl());
             personDto.setTempatLahir(biodata.getTempatLahir());
@@ -63,6 +66,7 @@ public class PersonController {
     public Biodata biodata(@PathVariable Integer idPerson){
         return biodataRepository.findByPersonIdPerson(idPerson);
     }
+
     //Soal No 2
     @GetMapping("/pendidikan/{nik}")
     public List<Object> get (@PathVariable String nik){
@@ -73,7 +77,7 @@ public class PersonController {
         if (nik.length() == 16) {
             if (personRepository.findByNik(nik)!=null && nik.length() == 16) {
                 Response3 response3 = new Response3();
-                PersonDto personDto = new PersonDto();
+//                PersonDto personDto = new PersonDto();
                 Date birth = biodataRepository.findTglByPersonNik(nik);
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(birth);
@@ -112,6 +116,7 @@ public class PersonController {
             Person person = convertToEntityPerson(personDto);
             person = personService.insertPerson(person);
             Biodata biodata = convertToEntityBio(personDto, person.getIdPerson());
+            biodata.setIdBiodata(personDto.getIdBiodata());
             personService.insertBiodata(biodata);
             response.setStatus("true");
             response.setMessage("Data berhasil masuk");

@@ -75,4 +75,6 @@ public class Response3 {
     public void setPendidikanTerakhir(String pendidikanTerakhir) {
         this.pendidikanTerakhir = pendidikanTerakhir;
     }
+
+   
 }

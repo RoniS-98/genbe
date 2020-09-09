@@ -10,6 +10,7 @@ import java.util.List;
 public interface PersonService {
     Person insertPerson(Person person);
     Biodata insertBiodata(Biodata biodata);
+    Biodata idbio(Biodata biodata);
     public void insertPendidikan(List<PendidikanDto> pendidikanDtoList,Integer idPerson);
 
 }

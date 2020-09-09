@@ -34,14 +34,6 @@ public class Biodata {
         this.idBiodata = idBiodata;
     }
 
-//    public String getNoHp() {
-//        return noHp;
-//    }
-
-//    public void setNoHp(String noHp) {
-//        this.noHp = noHp;
-//    }
-
     public Date getTgl() {
         return tgl;
     }

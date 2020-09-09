@@ -64,6 +64,7 @@ function getPerson() {
 
 function postPerson(){
   var person = {};
+  
   $("#btnSubmitPerson").click(function () {
     person.nik= $("#nik").val();
     person.name= $("#nama").val();
@@ -73,7 +74,7 @@ function postPerson(){
     person.tempatLahir= $("#tempatLahir").val();
     // console.log(person);
     var personObj = JSON.stringify(person);
-
+  
     $.ajax({
       type:'POST',
       url: 'person/trx',
@@ -119,21 +120,23 @@ function postPendidikan(){
   var pendidikan = [];
   var jenjang,institusi,tahunLulus,tahunMasuk;
   $("#btnSubmitPend").click(function () {
-    for (var i = 1; i<=id;i++){
-      jenjang = $('#jenjang'+i).val();
-      institusi= $('#institusi'+i).val();
-      tahunLulus= $('#tahunLulus'+i).val();
-      tahunMasuk= $('#tahunMasuk'+i).val();
-
-      pendidikan.push({
-        jenjang: jenjang,
-        institusi:institusi,
-        tahunMasuk:tahunMasuk,
-        tahunLulus:tahunLulus,
-      });
-      console.log(pendidikan);
-      var pendidikanObj = JSON.stringify(pendidikan);
-    }
+    if ($('#formPendidikan').parsley().validate()) {
+      for (var i = 1; i<=id;i++){
+        jenjang = $('#jenjang'+i).val();
+        institusi= $('#institusi'+i).val();
+        tahunLulus= $('#tahunLulus'+i).val();
+        tahunMasuk= $('#tahunMasuk'+i).val();
+  
+        pendidikan.push({
+          jenjang: jenjang,
+          institusi:institusi,
+          tahunMasuk:tahunMasuk,
+          tahunLulus:tahunLulus,
+        });
+        console.log(pendidikan);
+        var pendidikanObj = JSON.stringify(pendidikan);
+      }
+   
     console.log(pendidikanObj);
     $.ajax({
       type:'POST',
@@ -154,6 +157,7 @@ function postPendidikan(){
       }
     });
     // console.log(pendidikanObj);
+  }
   });
 }
 
@@ -166,14 +170,14 @@ function addForm(){
       '<div class="form-group">'+
       '<label for="idPerson" class="col-sm col-form-label">ID Person</label>'+
       '<div class="col-sm">'+
-      '<input type="text" class="form-control" id="idPerson' + id +'">'+
+      '<input type="text" class="form-control" required placeholder="Nomor Identitas" id="idPerson' + id +'">'+
       '</div>'+
       '</div>'+
       '<div class="form-group" id="add">' +
       '<label class="col-sm-2 col-form-label">Jenjang</label>' +
       '<div class="col-sm-12">' +
       ' <label class="mr-sm-2 sr-only" for="jenjang">Preference</label>' +
-      '<select class="custom-select mr-sm-2" id="jenjang' + id +'">' +
+      '<select class="custom-select mr-sm-2" required id="jenjang' + id +'">' +
       '   <option selected>Pilih...</option>' +
       '<option value="sd">SD</option>' +
       '<option value="smp">SMP</option>' +
@@ -187,19 +191,19 @@ function addForm(){
       '<div class="form-group">' +
       '<label for="institusi" class="col-sm col-form-label">Institusi</label>' +
       '<div class="col-sm">' +
-      '<input type="text" class="form-control" id="institusi' + id +'">' +
+      '<input type="text" class="form-control" id="institusi' + id +'"required placeholder="Institusi">' +
       '</div>' +
       '</div>' +
       '<div class="form-group">' +
       ' <label for="tahunMasuk" class="col-sm-2 col-form-label">Tahun Masuk</label>' +
       ' <div class="col-sm-12">' +
-      ' <input type="alamat" class="form-control" id="tahunMasuk' + id +'">' +
+      ' <input type="alamat" class="form-control" id="tahunMasuk' + id +'" required placeholder="Tahun Masuk">' +
       '</div>' +
       '</div>' +
       '<div class="form-group">' +
       '<label for="tahunLulus" class="col-sm col-form-label">Tahun Lulus</label>' +
       '<div class="col-sm">' +
-      '<input type="text" class="form-control" id="tahunLulus' + id +'">' +
+      '<input type="text" class="form-control" id="tahunLulus' + id +'" required placeholder="Tahun Lulus">' +
       ' </div>' +
       '</div>' +
       '<button type="button" class="btn btn-danger float-left remAdd" href="javascript:void(0);">Remove</button>' +

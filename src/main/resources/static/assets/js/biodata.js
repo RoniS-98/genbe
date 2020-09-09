@@ -57,7 +57,7 @@ var tableBiodata = {
                 title: "Action",
                 data: null,
                 render: function (data, type, row) {
-
+                  // console.log(data);
                   return "<button class='btn-primary' onclick=formBiodata.setEditData('" + data.idPerson + "')>Edit</button>"
                 }
               }
@@ -79,9 +79,12 @@ var tableBiodata = {
 var formBiodata = {
   resetForm: function () {
     $('#form-biodata')[0].reset();
+    $('#idBiodata').val('');
+    $('#idPerson').val('');
+
   },
   saveForm: function () {
-    // if ($('#form-biodata').parsley().validate()) {
+    if ($('#form-biodata').parsley().validate()) {
       var dataResult = getJsonForm($("#form-biodata").serializeArray(), true);
       const Toast = Swal.mixin({
         toast: true,
@@ -100,29 +103,30 @@ var formBiodata = {
           if (xhr.status == 200 || xhr.status == 201) {
             tableBiodata.create();
             if (status.status=="true"){
-              Toast.fire({
-                icon:'success',
-                type: 'success',
-                title: 'status : ' + status.status + '\nmessage: ' + 'Data Anda Berhasil Dikrim'
-              })
+              
+            } else{
             }
+            Toast.fire({
+              icon:'success',
+              type: 'success',
+              title: 'status : ' + 'Sukses' + '\n' + 'Data Anda Berhasil Dikirim'
+            })
             $('#modal-biodata').modal('hide')
           }
         },
         error: function (status) {
-          if (status.status=="true"){
-            Toast.fire({
-              icon:'success',
-              type: 'success',
-              title: 'status : ' + status.status + '\nmessage: ' + 'Data Anda Berhasil Dikrim'
-            })
-
+          Toast.fire({
+            icon:'error',
+            type: 'error',
+            title: 'status : ' + 'Gagal' + '\n ' + 'Data Anda Gagal Dikirim'
+          })
+          if (status.status=="false"){
           }
         }
       },
-      console.log(dataResult)
+      // console.log(JSON.stringify(dataResult))
       );
-    // }
+    }
   }, setEditData: function (idPerson) {
     formBiodata.resetForm();
 

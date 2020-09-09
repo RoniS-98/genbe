@@ -13,6 +13,8 @@ public class PersonDto {
     private String hp;
     private String jenjang;
     private Integer umur;
+    private Integer idBiodata;
+
 
 
     public Integer getIdPerson() {
@@ -85,5 +87,13 @@ public class PersonDto {
 
     public void setUmur(Integer umur) {
         this.umur = umur;
+    }
+
+    public Integer getIdBiodata(){
+        return idBiodata;
+    }
+
+    public void setIdBiodata(Integer idBiodata){
+        this.idBiodata = idBiodata;
     }
 }
