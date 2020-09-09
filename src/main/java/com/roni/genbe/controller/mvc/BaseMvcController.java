@@ -23,8 +23,12 @@ public class BaseMvcController {
         return "dashboard/tabelPerson";
     }
 
-    @GetMapping("/formModals")
-    public String formModals() {
+    @GetMapping("/formmodals")
+    public String formmodals() {
         return "dashboard/formModals";
+    }
+    @GetMapping("/formpendidikanmodals")
+    public String formpendidikanmodals() {
+        return "dashboard/formPendidikanModals";
     }
 }

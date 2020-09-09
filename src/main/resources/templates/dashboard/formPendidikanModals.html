@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html layout:decorate="~{base}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="row mb-2" layout:fragment="content-header">
+    <div class="col-sm-6">
+        <h1>Tabel Biodata</h1>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Tabel Pendidikan</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row" layout:fragment="content-body">
+    <div class="col-12">
+        <div class="card card-cyan">
+            <div class="card-header">
+                <h3 class="card-title">List Pendidikan</h3>
+                <button class="float-right btn-outline-info" id="btn-tambah-pendidikan">Tambah</button>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-striped table-bordered table-hover nowrap" id="tablePendidikan"
+                       style="width:100%"></table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-pendidikan">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-cyan">
+                    <h4 class="modal-title">Riwayat Pendidikan</h4>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form role="form" id="form-pendidikan">
+                        <div class="card-body">
+                            <!-- <fieldset class="card card-outline card-cyan"> -->
+                            <div class="form-group">
+                                <label for="idPerson" class="col-sm col-form-label">ID Person</label>
+                                <div class="col-sm">
+                                    <input type="text" class="form-control" id="idPerson" required placeholder="Nomor Identitas ">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-sm-2 col-form-label">Jenjang</label>
+                                <div class="col-sm-12">
+                                    <label class="mr-sm-2 sr-only" for="jenjang">Preference</label>
+                                    <select class="custom-select mr-sm-2" id="jenjang" name="jenjang" required>
+                                        <option value=null>Pilih...</option>
+                                        <option value="sd">SD</option>
+                                        <option value="smp">SMP</option>
+                                        <option value="sma">SMA</option>
+                                        <option value="s1">S1</option>
+                                        <option value="s2">S2</option>
+                                        <option value="s3">S3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="institusi" class="col-sm col-form-label">Institusi</label>
+                                <div class="col-sm">
+                                    <input type="text" class="form-control" id="institusi" required placeholder="Institusi" name="institusi">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tahunMasuk" class="col-sm col-form-label">Tahun Masuk</label>
+                                <div class="col-sm-12">
+                                    <input type="alamat" class="form-control" id="tahunMasuk" name="tahunMasuk" required placeholder="Tahun Masuk">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tahunLulus" class="col-sm col-form-label">Tahun Lulus</label>
+                                <div class="col-sm">
+                                    <input type="text" class="form-control" id="tahunLulus" name="tahunLulus" required placeholder="Tahun Lulus">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                    <button class="btn btn-outline-info" id="btn-save-biodata" type="button" >Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+</div>
+
+<th:block layout:fragment="add-scripts">
+    <script th:src="@{/assets/js/pendidikanModals.js}"></script>
+    <script th:src="@{/assets/js/person.js}"></script>
+    <script th:src="@{/assets/js/default.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+</th:block>
+
+
+<th:block layout:fragment="script">
+
+</th:block>
+</body>
+</html>
