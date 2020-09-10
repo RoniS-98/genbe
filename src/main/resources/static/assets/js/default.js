@@ -5,6 +5,7 @@ function getJsonForm(jsonArray, isAllowedNull) {
     if (value == "" && isAllowedNull) {
       value = null;
     }
+
     result[element.name] = value;
   });
   return result;

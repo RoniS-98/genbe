@@ -7,6 +7,7 @@ public class PendidikanDto {
     private String tahunMasuk;
     private String tahunLulus;
     private Integer idPerson;
+    private String nama;
 
     public Integer getIdEducation() {
         return idEducation;
@@ -54,5 +55,13 @@ public class PendidikanDto {
 
     public void setIdPerson(Integer idPerson) {
         this.idPerson = idPerson;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 }

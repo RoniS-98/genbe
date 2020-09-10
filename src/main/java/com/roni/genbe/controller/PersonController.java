@@ -108,6 +108,7 @@ public class PersonController {
         return status;
     }
     @PostMapping("/trx")
+
     public  Response insertTrx (@RequestBody PersonDto personDto){
         Response response = new Response();
         Calendar calendar = Calendar.getInstance();
@@ -128,24 +129,6 @@ public class PersonController {
     }
 
 
-//    @PostMapping
-//    public Response insert (@RequestBody PersonDto personDto){
-//        Response response = new Response();
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(personDto.getTgl());
-//        if (personDto.getNik().length()==16 && Year.now().getValue()-calendar.get(Calendar.YEAR)>=30){
-//            Person person = convertToEntityPerson(personDto);
-//            personRepository.save(person);
-//            Biodata biodata = convertToEntityBio(personDto, person.getIdPerson());
-//            biodataRepository.save(biodata);
-//            response.setStatus("true");
-//            response.setMessage("Data berhasil masuk");
-//        } else {
-//            response.setStatus("false");
-//            response.setMessage("Data gagal masuk, digit NIK tidak sama dengan 16 atau umur kurang dari 30 tahun");
-//        }
-//        return response;
-//    }
     private Biodata convertToEntityBio(PersonDto dto, Integer idPerson){
         Biodata biodata = new Biodata();
         biodata.setHp(dto.getHp());

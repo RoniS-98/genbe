@@ -29,6 +29,10 @@ var tablePendidikan = {
             data: res,
             columns: [
               {
+                title: "Id Person",
+                data: "idPerson"
+              },
+              {
                 title: "Jenjang",
                 data: "jenjang"
               },
@@ -49,9 +53,17 @@ var tablePendidikan = {
                 data: null,
                 render: function (data, type, row) {
                   // console.log(data);
-                  return "<button class='btn-info' onclick=formPendidikan.setEditData('" + data.idPerson + "')>Edit</button>"
+                  return "<button class='btn-info' onclick=formPendidikan.setEditData('" + data.idEducation + "')>Edit</button>"
                 }
-              }
+              },
+              // {
+              //   title: "Action",
+              //   data: null,
+              //   render: function (data, type, row) {
+              //     // console.log(data);
+              //     return "<button class='btn-danger' onclick=formPendidikan.setEditData('" + data.idPerson + "')>Delete</button>"
+              //   }
+              // }
             ]
           });
 
@@ -77,7 +89,8 @@ var formPendidikan = {
   saveForm: function () {
     if ($('#form-pendidikan').parsley().validate()) {
       var dataResult = getJsonForm($("#form-pendidikan").serializeArray(), true);
-      var hasil = [dataResult];
+
+      // var hasil = [dataResult];
       const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -89,22 +102,24 @@ var formPendidikan = {
           method: 'post',
           contentType: 'application/json',
           dataType: 'json',
-          data: JSON.stringify(hasil),
+          // data: [JSON.stringify(dataResult)],
+          data: JSON.stringify([dataResult]),
 
           success: function (res, status, xhr) {
-            if (xhr.status == 200 || xhr.status == 201) {
-              tableBiodata.create();
-              if (status.status=="true"){
+           /* if (xhr.status == 200 || xhr.status == 201) {*/
 
+              if (res.status=="True"){
+                Toast.fire({
+                  icon:'success',
+                  type: 'success',
+                  title: 'status : ' + 'Sukses' + '\n' + 'Data Anda Berhasil Dikirim'
+                })
+                tablePendidikan.create();
+                $('#modal-pendidikan').modal('hide')
               } else{
               }
-              Toast.fire({
-                icon:'success',
-                type: 'success',
-                title: 'status : ' + 'Sukses' + '\n' + 'Data Anda Berhasil Dikirim'
-              })
-              $('#modal-pendidikan').modal('hide')
-            }
+
+            /*}*/
           },
           error: function (status) {
             Toast.fire({
@@ -116,24 +131,23 @@ var formPendidikan = {
             }
           }
         },
-        console.log(JSON.stringify(dataResult))
+        console.log(status)
       );
     }
-  }, setEditData: function (idPerson) {
+  }, setEditData: function (idPendidikan) {
     formPendidikan.resetForm();
 
     $.ajax({
-      url: '/person/biodata/' + idPerson,
+      url: '/education/' + idPendidikan,
       method: 'get',
       contentType: 'application/json',
       dataType: 'json',
       success: function (res, status, xhr) {
         if (xhr.status == 200 || xhr.status == 201) {
           console.log(res)
-          $('#form-biodata').fromJSON(JSON.stringify(res));
-          $('#form-biodata').fromJSON(JSON.stringify(res.person));
-          $('#modal-biodata').modal('show')
-
+          $('#form-pendidikan').fromJSON(JSON.stringify(res));
+          // $('#form-pendidikan').fromJSON(JSON.stringify(res.person));
+          $('#modal-pendidikan').modal('show')
         }
       },
       error: function (err) {
@@ -142,5 +156,26 @@ var formPendidikan = {
     });
 
   }
+  // , setDeleteData: function (idPendidikan){
+  //   formPendidikan.resetForm();
+  //
+  //   $.ajax({
+  //     url: '/education/'+idPendidikan,
+  //     method:'delete',
+  //     contentType: 'application/json',
+  //     dataType: 'json',
+  //     success: function (res, status, xhr) {
+  //       if (xhr.status == 200 || xhr.status == 201) {
+  //         console.log(res)
+  //         $('#form-pendidikan').fromJSON(JSON.stringify(res));
+  //         // $('#form-pendidikan').fromJSON(JSON.stringify(res.person));
+  //         // $('#modal-pendidikan').modal('show')
+  //       }
+  //     },
+  //     error: function (err) {
+  //       console.log(err);
+  //     }
+  //   });
+  // }
 
 };

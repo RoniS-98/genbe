@@ -12,5 +12,5 @@ public interface PendidikanRepository extends JpaRepository<Pendidikan,Integer> 
     List<Pendidikan> findAllByPersonIdPerson(Integer id);
     @Query(value = "select jenjang from t_pendidikan inner join t_person on t_pendidikan.id_person = t_person.id_person where nik =? order by tahunlulus desc limit 1", nativeQuery = true)
     String findJenjangByNik(String nik);
-
+     Pendidikan findByPersonIdPerson(Integer idPerson);
 }

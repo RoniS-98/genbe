@@ -43,10 +43,19 @@
                     <form role="form" id="form-pendidikan">
                         <div class="card-body">
                             <!-- <fieldset class="card card-outline card-cyan"> -->
+                            <input name="idEducation" type="hidden" id="idEducation">
+                            <input name="idPerson" type="hidden" id="idPerson">
+
                             <div class="form-group">
-                                <label for="idPerson" class="col-sm col-form-label">ID Person</label>
+                                <label for="id" class="col-sm col-form-label">ID Person</label>
                                 <div class="col-sm">
-                                    <input type="text" class="form-control" id="idPerson" required placeholder="Nomor Identitas ">
+                                    <input type="text" class="form-control" id="id" required placeholder="Nomor Identitas" name="idPerson">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nama" class="col-sm col-form-label">Nama</label>
+                                <div class="col-sm">
+                                    <input type="text" class="form-control" id="nama" required placeholder="Nama" name="nama">
                                 </div>
                             </div>
                             <div class="form-group ">

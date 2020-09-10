@@ -3,6 +3,7 @@ package com.roni.genbe.controller;
 
 import com.roni.genbe.model.dto.PendidikanDto;
 import com.roni.genbe.model.dto.Response;
+import com.roni.genbe.model.entity.Biodata;
 import com.roni.genbe.model.entity.Pendidikan;
 import com.roni.genbe.model.entity.Person;
 import com.roni.genbe.repository.PendidikanRepository;
@@ -56,6 +57,26 @@ public Response insert(@PathVariable Integer idPerson, @RequestBody List<Pendidi
     }
     return null;
 }
+    @GetMapping("/{idPendidikan}")
+    public PendidikanDto pendidikanDto(@PathVariable Integer idPendidikan){
+        Pendidikan pendidikan = pendidikanRepository.findById(idPendidikan).get();
+        PendidikanDto pendidikanDto = new PendidikanDto();
+        pendidikanDto.setIdEducation(pendidikan.getIdPendidikan());
+        pendidikanDto.setInstitusi(pendidikan.getInstitusi());
+        pendidikanDto.setJenjang(pendidikan.getJenjang());
+        pendidikanDto.setTahunMasuk(pendidikan.getTahunMasuk());
+        pendidikanDto.setTahunLulus(pendidikan.getTahunLulus());
+        pendidikanDto.setIdPerson(pendidikan.getPerson().getIdPerson());
+        pendidikanDto.setNama(pendidikan.getPerson().getName());
+//        pendidikanDto = pendidikanRepository
+        return pendidikanDto;
+    }
+
+    @DeleteMapping("/{idPendidikan}")
+    public void delete (@PathVariable Integer idPendidikan){
+        pendidikanRepository.deleteById(idPendidikan);
+    }
+
 
     private Response response (String status, String message){
         Response response = new Response();
